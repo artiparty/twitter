@@ -6,6 +6,7 @@
 # This means import "twitter" module (the one you installed with gem install twitter) into your current code.
 # This makes Twitter:: available.
 require 'twitter'
+require 'date'
 
 # Here you configure the client to be able to connect to twitter API.
 # For real life applications this is secret and can't be publically shared via github. 
@@ -37,20 +38,25 @@ def client.get_all_tweets(user)
   end
 end
 
+
+
 ####
 #### ART: This is what is interesting for you:
 
 # We make an API call to get all tweets for user "tezzataz"
 # The returned result is attached to a name "tweets" you could call it any name you watned "MyCoolResult" would work as well. But don't do it. as code should be elegent to the reader.
-tweets = client.get_all_tweets("tezzataz")
+tweets = client.get_all_tweets("smashingmag")
+# @tweets = @client.query "from:puredanger filter:links since:2009-03-23"
+recent_tweets = tweets(tweet.created_at = Date.today)
 
 # After we got results into tweets, we instruct our code to iterate over the tweets (which is an array containing many TWeet objects)
-for tweet in tweets
+for tweet in recent_tweets
 	# for each tweet, we do the following:
 	# Extract created_at which is the date at which this tweet was stored into Twitter
 	# Extract retweet_count which is how many people retweeted it
 	# Extract text which is what the user wrote in his tweet.
 	# print the constructed sting to the user using puts
+
 	puts "#{tweet.created_at} #{tweet.retweet_count } #{tweet.text}"
 end
 
